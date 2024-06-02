@@ -1,0 +1,40 @@
+[project]
+
+name = "gage-summary"
+version = "0.1.0"
+authors = [
+  { name="Garrett Smith", email="garrett@placeon.earth" },
+]
+description = "Light weight utility to support Gage summaries"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = []  # This will never change
+
+[project.optional-dependencies]
+
+dev = [
+    "black",
+    "groktest",
+    "ipython",
+    "tomli",
+]
+
+[project.urls]
+
+"Homepage" = "https://github.com/gageml/gage-summary"
+"Bug Tracker" = "https://github.com/gageml/gage-summary/issues"
+
+[tool.black]
+
+skip-string-normalization = true
+
+[tool.groktest]
+
+include = "tests/*.md"
+python.init = "from gage_summary._test_support import *"
