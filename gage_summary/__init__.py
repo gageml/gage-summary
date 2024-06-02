@@ -35,11 +35,10 @@ def write_summary(
 ):
 
     summary = _summary(metrics, attributes)
-
+    _maybe_write_summary(always_write, summary, filename)
     if echo:
         _echo_summary(summary, echo_format)
 
-    _maybe_write_summary(always_write, summary, filename)
 
 
 def _summary(metrics: Metrics, attributes: Attributes | None):
