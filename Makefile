@@ -20,3 +20,6 @@ venv: .venv/bin/activate
 
 upload-to-pypi:
 	python -m twine upload dist/*
+
+test:
+	groktest .
