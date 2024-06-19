@@ -1,0 +1,10 @@
+{
+    "python.analysis.ignore": ["examples", "tests", "build"],
+    "cSpell.words": [
+        "dtype",
+        "getcwd",
+        "getenv",
+        "repr",
+        "Traceback"
+    ]
+}
