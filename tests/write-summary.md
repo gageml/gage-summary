@@ -193,3 +193,58 @@ Specify the current directory as a `RUN_DIR` env var when calling
         "width": 987
       }
     }
+
+### Summaries with meta attrs
+
+Summary values may be dicts/maps with a `value` key along with other
+meta attributes.
+
+    >>> summary = {
+    ...   "metrics": {
+    ...     "foo": {
+    ...       "value": 1.123,
+    ...       "extra": "some data",
+    ...     },
+    ...     "bar": {
+    ...       "value": None,
+    ...       "extra-2": ["some other data", 123],
+    ...     }
+    ...   },
+    ...   "attributes": {
+    ...     "baz": {
+    ...       "value": "abc",
+    ...       "link": "/def",
+    ...     }
+    ...   }
+    ... }
+
+    >>> write_summary(**summary)  # -space
+    bar:
+    baz: abc
+    foo: 1.123
+
+    >>> ls()
+    summary.json
+
+    >>> cat("summary.json")
+    {
+      "attributes": {
+        "baz": {
+          "link": "/def",
+          "value": "abc"
+        }
+      },
+      "metrics": {
+        "bar": {
+          "extra-2": [
+            "some other data",
+            123
+          ],
+          "value": null
+        },
+        "foo": {
+          "extra": "some data",
+          "value": 1.123
+        }
+      }
+    }

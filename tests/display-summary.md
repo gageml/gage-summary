@@ -37,7 +37,9 @@ Display metrics and attributes.
     ...         "acc": 95
     ...     },
     ...     attributes={
-    ...         "dtype": "int8"
+    ...         "dtype": {
+    ...              "value": "int8"
+    ...         }
     ...     }
     ... )._repr_html_())  # +diff
     <h2>Metrics</h2>

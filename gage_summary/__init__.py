@@ -40,7 +40,6 @@ def write_summary(
         _echo_summary(summary, echo_format)
 
 
-
 def _summary(metrics: Metrics, attributes: Attributes | None):
     return {
         **({"metrics": metrics} if metrics else {}),
@@ -108,14 +107,26 @@ def _echo_flat(summary: dict[str, Any]):
         metric = metrics.get(name, missing)
         attr = attributes.get(name, missing)
         if metric is not missing and attr is not missing:
-            print(f"{name} (metric): {metric:g}")
-            print(f"{name} (attribute): {attr}")
+            print(f"{name} (metric): {_formatted_metric_value(metric)}")
+            print(f"{name} (attribute): {_attribute_value(attr)}")
         elif metric is not missing:
-            print(f"{name}: {metric:g}")
+            print(f"{name}: {_formatted_metric_value(metric)}")
         elif attr is not missing:
-            print(f"{name}: {attr}")
+            print(f"{name}: {_attribute_value(attr)}")
         else:
             assert False, (name, summary)
+
+
+def _formatted_metric_value(metric: Any):
+    value = metric.get("value") if isinstance(metric, dict) else metric
+    if isinstance(value, (int, float)):
+        return f"{value:g}"
+    return str(value) if value is not None else ""
+
+
+def _attribute_value(attr: Any):
+    value = attr.get("value") if isinstance(attr, dict) else attr
+    return str(value)
 
 
 def _echo_json(summary: dict[str, Any]):
@@ -152,7 +163,7 @@ def _summary_html(metrics: Metrics, attributes: Attributes | None, heading_level
 
 
 def _apply_html_section(
-    section: Metrics | Attributes,
+    section: Metrics | Attributes | None,
     heading: str,
     heading_level: str,
     html: list[str],
@@ -162,5 +173,6 @@ def _apply_html_section(
     html.append(f"<{heading_level}>{heading}</{heading_level}>")
     html.append("<table>")
     for name, val in section.items():
+        val = val.get("value") if isinstance(val, dict) else val
         html.append(f"  <tr><th>{name}</th><td>{val}</td></tr>")
     html.append("</table>")
